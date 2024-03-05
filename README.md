@@ -33,6 +33,7 @@ docker build -t ros-noetic-image .
 ```bash
 sudo docker build -t ros-noetic-image .
 ```
+It is normal if it takes long to build in first time.
 
 ⚠️ **Warning**: Ensure to replace `your_os_user` with your actual system username.
 
@@ -41,7 +42,7 @@ sudo docker build -t ros-noetic-image .
 Run the container based on the defined image using the following command:
 
 ```bash
-docker run -it --rm --user=$(id -u $USER):$(id -g $USER) --env="DISPLAY" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --net host -v /home:/home -v ~/Volumes:/home/usr/ ros-noetic
+docker run -it --rm --name ros-noetic-container --user=$(id -u $USER):$(id -g $USER) --env="DISPLAY" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --net host -v /home:/home -v ~/Volumes:/home/usr/ ros-noetic-image
 ```
 
 #### 3. Run Your First ROS Node
@@ -81,7 +82,9 @@ In another Terminator tab (do not close the one with `roscore` running), run the
 rosrun turtlesim turtlesim_node
 ```
 
-This should open a window displaying the Turtlesim environment.
+This should open a window displaying the Turtlesim environment like this:
+
+![Turtlesim window](./turtlesimWindow.png)
 
 ##### 3.4 Control the Turtle
 In another Terminator tab, run the following command to control the turtle using keyboard inputs:
