@@ -12,7 +12,15 @@ This guide outlines the steps to run your first ROS node through a Docker contai
 
 ### Steps
 
-#### 1. Build the Docker Image
+#### 1. Clone the Repository
+Clone the repository containing the Dockerfile:
+
+```bash
+git clone git@github.com:Suyannesara/ROS-noetic-docker.git
+cd ROS-noetic-docker
+```
+
+#### 2. Build the Docker Image
 
 The Dockerfile provided in this project defines an image with ROS Noetic installed.
 
@@ -28,16 +36,16 @@ Then, build the image pasting the following command on your terminal:
 ```bash
 docker build -t ros-noetic-image .
 ```
-🛑 **Disclaimer**: If you are facing problems to run docker this way, try adding sudo to the beggining of commands:
+🛑 **Disclaimer**: If you are facing problems to run docker this way, try adding sudo to the beginning of commands:
 
 ```bash
 sudo docker build -t ros-noetic-image .
 ```
-It is normal if it takes long to build in first time.
+It is normal if it takes long to build for the first time.
 
 ⚠️ **Warning**: Ensure to replace `your_os_user` with your actual system username.
 
-#### 2. Run the Container
+#### 3. Run the Container
 
 Run the container based on the defined image using the following command:
 
@@ -45,16 +53,16 @@ Run the container based on the defined image using the following command:
 docker run -it --rm --name ros-noetic-container --user=$(id -u $USER):$(id -g $USER) --env="DISPLAY" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --net host -v /home:/home -v ~/Volumes:/home/usr/ ros-noetic-image
 ```
 
-#### 3. Run Your First ROS Node
+#### 4. Run Your First ROS Node
 
-##### 3.1 Start the Terminator Application
+##### 4.1 Start the Terminator Application
 Inside the container, start the Terminator application for better terminal window management:
 
 ```bash
 terminator -u
 ```
 
-##### 3.2 Run `roscore`
+##### 4.2 Run `roscore`
 In a Terminator window, run the following command to start `roscore`:
 
 ```bash
@@ -75,7 +83,7 @@ roscore
    source ~/.bashrc
    ```
 
-##### 3.3 Run the Turtlesim Node
+##### 4.3 Run the Turtlesim Node
 In another Terminator tab (do not close the one with `roscore` running), run the following command to start the Turtlesim node:
 
 ```bash
@@ -86,7 +94,7 @@ This should open a window displaying the Turtlesim environment like this:
 
 ![Turtlesim window](./turtlesimWindow.png)
 
-##### 3.4 Control the Turtle
+##### 4.4 Control the Turtle
 In another Terminator tab, run the following command to control the turtle using keyboard inputs:
 
 ```bash
