@@ -1,5 +1,5 @@
 
-### Running Your First ROS Node Through a Docker Container
+### 🚢 Running Your First ROS Node Through a Docker Container
 This guide outlines the steps to run your first ROS node through a Docker container. The Docker container is pre-configured with Ubuntu 20.04 and ROS Noetic.
 *Based on: [Docker container with pre-installed Ubuntu20.04 and ROS Noetic](https://medium.com/@sepideh.92sh/how-docker-revolutionizes-application-development-a-comprehensive-guide-for-beginners-fc2d3e53eb31)*
 
