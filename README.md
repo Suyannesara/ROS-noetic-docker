@@ -8,7 +8,7 @@ This guide outlines the steps to run your first ROS node through a Docker contai
 - **ROS Distribution**: Noetic
 
 ### Prerequisites
-- Docker installed on your system. You can check if Docker is installed by running `docker --version` in your terminal.
+- Docker and docker compose installed on your system. You can check if Docker is installed by running `docker --version` in your terminal.
 
 ### Steps
 
