@@ -7,9 +7,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 
 # Source ros1 itens
-RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-RUN echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
-RUN source ~/.bashrc
+# RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+# RUN echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
+# RUN source ~/.bashrc
 
 # Install dependencies
 RUN apt-get update

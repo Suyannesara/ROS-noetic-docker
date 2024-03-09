@@ -24,6 +24,16 @@ Clone the repository containing the Dockerfile:
 
 The Dockerfile provided in this project defines an image with ROS Noetic installed.
 
+**Modify your bashrc file to source ros1 itens:**
+The comands above are necessary in order to source ros1 itens. In your terminal, paste:
+NOTE: You should do it only ONCE, the first time you are running this tutorial in your machine.
+
+```bash
+   echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+   echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
+   source ~/.bashrc
+```
+
 **Modify the Dockerfile to use your system user:**
 
 Then, build the image by running the following command in your terminal:
