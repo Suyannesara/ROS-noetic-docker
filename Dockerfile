@@ -6,30 +6,61 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 SHELL ["/bin/bash", "-c"]
 
-# Source ros1 itens
-# RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-# RUN echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
-# RUN source ~/.bashrc
+# Atualiza os pacotes e instala dependências do ROS e outras ferramentas
+RUN apt-get update && apt-get install -y \
+    git \
+    sudo \
+    ros-noetic-moveit \
+    ros-noetic-ros-controllers \
+    ros-noetic-gazebo-ros-control \
+    ros-noetic-rosserial \
+    ros-noetic-rosserial-arduino \
+    ros-noetic-roboticsgroup-upatras-gazebo-plugins \
+    ros-noetic-actionlib-tools \
+    python3-pip \
+    build-essential \
+    cmake \
+    pkg-config \
+    libjpeg-dev \
+    libtiff5-dev \
+    libpng-dev \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    libv4l-dev \
+    libxvidcore-dev \
+    libx264-dev \
+    libgtk-3-dev \
+    libatlas-base-dev \
+    gfortran \
+    libeigen3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN apt-get update
-RUN apt-get -y install git
-RUN apt-get install -y sudo ros-noetic-moveit
-RUN apt-get install -y ros-noetic-ros-controllers 
-RUN apt-get install -y ros-noetic-gazebo-ros-control 
-RUN apt-get install -y ros-noetic-rosserial
-RUN apt-get install -y ros-noetic-rosserial-arduino
-RUN apt-get install -y ros-noetic-roboticsgroup-upatras-gazebo-plugins
-RUN apt-get install -y ros-noetic-actionlib-tools
-RUN apt-get install -y python3-pip && rm -rf /var/lib/apt/lists/*
 
-# Export host in case of master not found
-RUN export ROS_HOSTNAME=localhost
-RUN export ROS_MASTER_URI=http://localhost:11311
+# Baixa e compila o OpenCV
+WORKDIR /tmp
+RUN git clone https://github.com/opencv/opencv.git
+RUN git clone https://github.com/opencv/opencv_contrib.git
+WORKDIR /tmp/opencv
+RUN git checkout 4.5.1
+WORKDIR /tmp/opencv_contrib
+RUN git checkout 4.5.1
+WORKDIR /tmp/opencv/build
+RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_C_EXAMPLES=ON \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D OPENCV_GENERATE_PKGCONFIG=ON \
+    -D OPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib/modules \
+    -D BUILD_EXAMPLES=ON ..
+RUN make -j$(nproc)
+RUN make install
+RUN ldconfig
 
-# RUN useradd -ms /bin/bash ${USER}
-# USER ${USER}
+# Limpa os arquivos de instalação do OpenCV para economizar espaço
+WORKDIR /
+RUN rm -rf /tmp/opencv /tmp/opencv_contrib
+
+# Configurações finais
 WORKDIR /home/${USER}
-
-
 ENTRYPOINT ["/bin/bash"]
