@@ -1,35 +1,38 @@
-FROM osrf/ros:noetic-desktop-full
+# This is an auto generated Dockerfile for ros:ros-base
+# generated from docker_images/create_ros_image.Dockerfile.em
+FROM ros:noetic-ros-core-focal
 
-# YOU should replace your_os_user with your actual system user
-ARG USER=your_os_user
+ARG USER=suyanne
 ARG DEBIAN_FRONTEND=noninteractive
 
 SHELL ["/bin/bash", "-c"]
 
 # Source ros1 itens
-# RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-# RUN echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
-# RUN source ~/.bashrc
+RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
+RUN source ~/.bashrc
 
-# Install dependencies
-RUN apt-get update
-RUN apt-get -y install git
-RUN apt-get install -y sudo ros-noetic-moveit
-RUN apt-get install -y ros-noetic-ros-controllers 
-RUN apt-get install -y ros-noetic-gazebo-ros-control 
-RUN apt-get install -y ros-noetic-rosserial
-RUN apt-get install -y ros-noetic-rosserial-arduino
-RUN apt-get install -y ros-noetic-roboticsgroup-upatras-gazebo-plugins
-RUN apt-get install -y ros-noetic-actionlib-tools
-RUN apt-get install -y python3-pip && rm -rf /var/lib/apt/lists/*
+# install bootstrap tools
+RUN apt-get update 
+RUN apt-get install --no-install-recommends -y \
+    build-essential \
+    python3-rosdep \
+    python3-rosinstall \
+    python3-vcstools \
+    && rm -rf /var/lib/apt/lists/* \
+    sudo ros-noetic-moveit \
+    ros-noetic-ros-controllers \
+    ros-noetic-turtlesim 
 
-# Export host in case of master not found
-RUN export ROS_HOSTNAME=localhost
-RUN export ROS_MASTER_URI=http://localhost:11311
+# bootstrap rosdep
+RUN rosdep init && \
+  rosdep update --rosdistro noetic
 
-# RUN useradd -ms /bin/bash ${USER}
-# USER ${USER}
+# install ros packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-noetic-ros-base=1.5.0-1* \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /home/${USER}
-
 
 ENTRYPOINT ["/bin/bash"]
