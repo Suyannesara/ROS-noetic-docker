@@ -14,7 +14,6 @@ RUN source ~/.bashrc
 
 # install bootstrap tools
 RUN apt-get update 
-# RUN apt-get install git
 RUN apt-get install --no-install-recommends -y \
     git \
     build-essential \
@@ -30,23 +29,37 @@ RUN rosdep init && \
 # install ros packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-noetic-ros-base=1.5.0-1* \
-    ros-noetic-turtlesim \
     && rm -rf /var/lib/apt/lists/*
 
 
 # OPENCV
-RUN apt-get install -y \
-    build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev \
-    python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev \
-    libcanberra-gtk-module libcanberra-gtk3-module
+RUN apt-get install build-essential 
+RUN apt-get install cmake 
+RUN apt-get install git 
+# RUN apt-get install unzipW 
+RUN apt-get install pkg-config
 
-# Clone, build and install OpenCV
-RUN git clone https://github.com/opencv/opencv.git && \
-    cd /opencv && mkdir build && cd build && \
-    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
-    make -j"$(nproc)" && \
-    make install && \
-    rm -rf /opencv
+RUN apt-get install libjpeg-dev 
+RUN apt-get install libpng-dev 
+RUN apt-get install libtiff-dev
+
+
+RUN git clone https://github.com/opencv/opencv 
+RUN git clone https://github.com/opencv/opencv_contrib
+
+
+RUN cd ~/opencv 
+RUN mkdir build 
+RUN cd build 
+RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \ 
+        -D CMAKE_INSTALL_PREFIX=/usr/local \ 
+        -D WITH_CUDA=OFF \ 
+        -D INSTALL_PYTHON_EXAMPLES=ON \ 
+        -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \ 
+        -D OPENCV_ENABLE_NONFREE=ON \ 
+        -D BUILD_EXAMPLES=ON ..
+
+RUN ldconfig
 
 WORKDIR /home/${USER}
 

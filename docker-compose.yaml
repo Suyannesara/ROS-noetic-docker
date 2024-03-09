@@ -6,7 +6,7 @@ services:
     container_name: ros-noetic-container
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.test
     stdin_open: true
     tty: true
     volumes:
