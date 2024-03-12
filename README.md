@@ -24,15 +24,7 @@ Clone the repository containing the Dockerfile:
 
 The Dockerfile provided in this project defines an image with ROS Noetic installed.
 
-**Modify your bashrc file to source ros1 itens:**
-The comands above are necessary in order to source ros1 itens. In your terminal, paste:
-NOTE: You should do it only ONCE, the first time you are running this tutorial in your machine.
-
-```bash
-   echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-   echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
-   source ~/.bashrc
-```
+**Modify your bashrc file to source ros1 i
 
 **Modify the Dockerfile to use your system user:**
 
@@ -76,13 +68,28 @@ Then, gazebo will be able to launch any ways you need. You can check by pasting 
 #### 5. Run Your First ROS1 Node
 
 ##### 5.1 Run `roscore`
+The comands above are necessary in order to source ros1 itens. Whenever you use roscore, you are going to need to execute these lines first. In your terminal, paste:
+
+```bash
+   echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+   echo "source /opt/ros/noetic/setup.sh" >> ~/.bashrc
+   source ~/.bashrc
+```
+
 Inside a container terminal instance, run the following command to start `roscore`:
 
 ```bash
    roscore
 ```
 
-##### 5.2 Run the Turtlesim Node
+
+### BONUS
+##### Run the Turtlesim Node
+In a terminal OUTSIDE the container one, run the command above if have not done it yet:
+```bash
+   xhost +local:docker
+```
+
 In another docker container terminal instance (that you can open with the command in section 4.1), run the following command to start the Turtlesim node:
 
 ```bash
@@ -95,9 +102,6 @@ In another docker container terminal instance (that you can open with the comman
 This should open a window displaying the Turtlesim environment like this:
 
 ![Turtlesim window](./turtlesimWindow.png)
-
-
-*🛑 Please note: By default, systems may NOT allow opening graphical tools as root, which is the case with Docker. If the Turtlesim window does not appear, kill the process and paste `xhost si:your_os_user:root` in the terminal, make sure to replace `your_os_user` with your actual system user. If issues persist, you can find more information about this problem here: [StackOverflow question help]https://stackoverflow.com/questions/48833451/no-protocol-specified-when-running-a-sudo-su-app-on-ubuntu-linux.*
 
 ##### 4.4 Control the Turtle
 In another docker container instance terminal tab, run the following command to control the turtle using keyboard inputs:
