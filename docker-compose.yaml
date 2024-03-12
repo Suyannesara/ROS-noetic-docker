@@ -21,3 +21,4 @@ services:
       - LIBGL_ALWAYS_SOFTWARE=1
     network_mode: "host"
     user: "${USER}:${USER}"
+

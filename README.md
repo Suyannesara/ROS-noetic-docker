@@ -51,9 +51,7 @@ Run the container based on the defined image using the following commands:
 ```
 It is normal if it takes long to build for the first time!
 
-#### 4. Run Your First ROS Node
-
-##### 4.1 Start multiple docker terminals
+##### 3.1 Start multiple docker terminals
 
 Once you've done the steps till now, your docker container is running on your machine in the background, so that you are able to open multiple instances of the container with the command:
 
@@ -64,14 +62,27 @@ Once you've done the steps till now, your docker container is running on your ma
 This will open your container work around.
 
 
-##### 4.2 Run `roscore`
+#### 4. Run Gazebo inside docker container
+In a terminal OUTSIDE the container one, run:
+```bash
+   xhost +local:docker
+```
+
+Then, gazebo will be able to launch any ways you need. You can check by pasting the comand above INSIDE container terminal:
+```bash
+   gazebo
+```
+
+#### 5. Run Your First ROS1 Node
+
+##### 5.1 Run `roscore`
 Inside a container terminal instance, run the following command to start `roscore`:
 
 ```bash
    roscore
 ```
 
-##### 4.3 Run the Turtlesim Node
+##### 5.2 Run the Turtlesim Node
 In another docker container terminal instance (that you can open with the command in section 4.1), run the following command to start the Turtlesim node:
 
 ```bash
