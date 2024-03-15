@@ -70,7 +70,7 @@ In a terminal OUTSIDE the container one, run:
 
 Then, gazebo will be able to launch any ways you need. You can check by pasting the comand above INSIDE container terminal:
 ```bash
-   gazebo
+   gazebou
 ```
 
 #### 5. Run Your First ROS1 Node

@@ -3,19 +3,19 @@ version: '3.9'
 services:
   ros1-noetic:
     image: ros-noetic-image
-    container_name: ros-noetic-container
+    container_name: ros-noetic-container-test
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.test
     stdin_open: true
     tty: true
     volumes:
-      - "/etc/group:/etc/group:ro"
-      - "/etc/passwd:/etc/passwd:ro"
-      - "/etc/shadow:/etc/shadow:ro"
-      - "/etc/sudoers.d:/etc/sudoers.d:ro"
+      - "/etc/group:/etc/group:rw"
+      - "/etc/passwd:/etc/passwd:rw"
+      - "/etc/shadow:/etc/shadow:rw"
+      - "/etc/sudoers.d:/etc/sudoers.d:rw"
       - "/home:/home"
-      - "~/Volumes:/home/usr"
+      - "~/Volumes:/home/usr:rw"
     environment:
       - DISPLAY=:0
       - LIBGL_ALWAYS_SOFTWARE=1
